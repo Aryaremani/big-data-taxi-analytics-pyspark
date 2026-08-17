@@ -21,19 +21,28 @@ containing several million rows, processed in a distributed manner using Apache 
 
 ## Key Findings
 
-- Trip volume shows a clear, repeatable peak-demand hour across the day (see notebook output
-  for the exact hour from this run).
-- Revenue is concentrated in a small number of pickup zones. The top 10 zones by total
-  revenue are not always the same as the top 10 by trip count, which has direct implications
-  for where vehicles should be positioned.
-- Approximately [X]% of raw records were identified as invalid (zero or negative fares,
-  invalid distances or passenger counts, corrupted timestamps) and removed prior to analysis.
-- A Random Forest regression model, trained with Spark MLlib, predicts fare amount from trip
-  distance, duration, pickup hour, and day of week, achieving an RMSE of [value] and an R² of
-  [value] on the held-out test set.
-
-*(Bracketed values reflect placeholders to be filled in with results from an executed run —
-see the "How to Run" section below.)*
+- Analyzed 2,964,624 taxi trips from January 2024, spanning 19 columns of trip-level data.
+- Trip volume peaks at **6 PM (hour 18)**, with 212,788 trips — the clear busiest hour of the
+  day. Demand tapers to a low around 6 AM (41,429 trips).
+- The highest **average fare** occurs at **5 AM** ($26.62), driven by fewer, longer trips
+  (e.g., airport runs) rather than by traffic-driven surcharges.
+- Revenue is concentrated far more sharply than trip volume: pickup zone **132** alone
+  generated **$8.63M** in fares — nearly 2.5x the next-highest zone — while ranking only 1st
+  by trip count as well, making it the single most valuable zone in the dataset by both
+  measures.
+- **240,971 records (8.13%)** of the raw dataset were identified as invalid (zero/negative
+  fares or distances, invalid passenger counts, corrupted timestamps) and removed before
+  analysis.
+- A **Random Forest regression model** (Spark MLlib) predicting fare amount from trip
+  distance, duration, pickup hour, and day of week achieved **RMSE = 6.20, MAE = 1.64, R² =
+  0.871** on the held-out test set. Trip distance (65%) and trip duration (34%) accounted for
+  nearly all of the model's predictive power.
+- A second model (Gradient-Boosted Trees) performed marginally better (RMSE = 6.12, R² =
+  0.874), at the cost of longer training time — see the Challenge section of the notebook.
+- The performance experiment showed that **caching provided the clearest speedup** (0.91s →
+  0.28s on a repeated aggregation), while blind repartitioning on a small 2-core Colab runtime
+  actually slowed the same operation down (0.91s → 4.96s) due to shuffle overhead exceeding
+  the benefit of added parallelism.
 
 ## Repository Contents
 
@@ -66,5 +75,6 @@ publicly available Parquet files published by the New York City Taxi and Limousi
 3. A full run typically takes 10–20 minutes, depending on the allocated Colab runtime.
 
 ## Author
-ARYA R 
-aryaramani94@gmail.com
+
+[Your Name]
+[LinkedIn] · [Email or portfolio link]
