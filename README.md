@@ -78,5 +78,5 @@ publicly available Parquet files published by the New York City Taxi and Limousi
 
 ## Author
 
-[Your Name]
-[LinkedIn] · [Email or portfolio link]
+ARYA R
+
