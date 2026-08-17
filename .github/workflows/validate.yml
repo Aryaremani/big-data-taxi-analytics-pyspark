@@ -1,0 +1,34 @@
+name: Validate Notebook
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install nbformat nbclient
+
+      - name: Validate notebook structure
+        run: |
+          python -c "
+          import nbformat
+          nb = nbformat.read('PySpark_NYC_Taxi_Lab.ipynb', as_version=4)
+          nbformat.validate(nb)
+          print(f'Notebook is valid. {len(nb.cells)} cells.')
+          "
+
+      - name: Check Python script compiles
+        run: python -m py_compile PySpark_NYC_Taxi_Lab.py
