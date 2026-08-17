@@ -8,6 +8,8 @@ the core pipeline.
 
 **Tech stack:** PySpark · Spark SQL · Spark MLlib · Google Colab
 
+![Validate Notebook](https://github.com/YOUR_USERNAME/pyspark-nyc-taxi-analytics/actions/workflows/validate.yml/badge.svg)
+
 ---
 
 ## Overview

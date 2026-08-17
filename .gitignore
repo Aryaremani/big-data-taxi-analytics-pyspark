@@ -1,0 +1,11 @@
+# Downloaded taxi data (large files — don't commit)
+*.parquet
+
+# Python / notebook clutter
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+# Spark
+spark-warehouse/
+metastore_db/
